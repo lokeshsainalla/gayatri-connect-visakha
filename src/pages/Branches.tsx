@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 import { 
   MapPin, 
   Phone, 
@@ -10,8 +11,17 @@ import {
   Car,
   Bus,
   Building,
-  GraduationCap
+  GraduationCap,
+  ExternalLink
 } from "lucide-react";
+import asilmettaCampus from "@/assets/asilmetta-campus.jpg";
+import gajuwakaCampus from "@/assets/gajuwaka-campus.jpg";
+import madhurawadaCampus from "@/assets/madhurawada-campus.jpg";
+import nadCampus from "@/assets/nad-campus.jpg";
+import libraryImage from "@/assets/library-interior.jpg";
+import classroomImage from "@/assets/classroom-modern.jpg";
+import cafeteriaImage from "@/assets/cafeteria.jpg";
+import sportsImage from "@/assets/sports-ground.jpg";
 
 const Branches = () => {
   const branches = [
@@ -25,6 +35,7 @@ const Branches = () => {
       established: "1999",
       students: "600+",
       courses: ["MPC", "BiPC", "MEC", "CEC"],
+      image: asilmettaCampus,
       facilities: [
         "Air-conditioned classrooms",
         "Physics & Chemistry labs",
@@ -40,7 +51,8 @@ const Branches = () => {
         "Excellent board exam results",
         "Strong alumni network",
         "Modern infrastructure"
-      ]
+      ],
+      galleryImages: [libraryImage, classroomImage, sportsImage]
     },
     {
       id: "gajuwaka",
@@ -52,6 +64,7 @@ const Branches = () => {
       established: "2005",
       students: "500+",
       courses: ["MPC", "BiPC", "MEC"],
+      image: gajuwakaCampus,
       facilities: [
         "Smart classrooms",
         "Well-equipped laboratories",
@@ -67,7 +80,8 @@ const Branches = () => {
         "Focus on technical courses",
         "Industry connections",
         "Practical learning approach"
-      ]
+      ],
+      galleryImages: [classroomImage, cafeteriaImage, libraryImage]
     },
     {
       id: "madhurawada",
@@ -79,6 +93,7 @@ const Branches = () => {
       established: "2012",
       students: "450+",
       courses: ["MPC", "BiPC", "MEC", "CEC"],
+      image: madhurawadaCampus,
       facilities: [
         "Modern architecture",
         "Advanced science labs",
@@ -94,7 +109,8 @@ const Branches = () => {
         "IT corridor location",
         "Modern facilities",
         "Tech-enabled learning"
-      ]
+      ],
+      galleryImages: [sportsImage, libraryImage, classroomImage]
     },
     {
       id: "nad",
@@ -106,6 +122,7 @@ const Branches = () => {
       established: "2008",
       students: "400+",
       courses: ["MEC", "CEC", "BiPC"],
+      image: nadCampus,
       facilities: [
         "Centrally located campus",
         "Commerce lab",
@@ -121,7 +138,8 @@ const Branches = () => {
         "Commerce specialization",
         "Easy accessibility",
         "Experienced faculty"
-      ]
+      ],
+      galleryImages: [cafeteriaImage, classroomImage, sportsImage]
     }
   ];
 
@@ -173,6 +191,26 @@ const Branches = () => {
         <div className="space-y-12">
           {branches.map((branch, index) => (
             <Card key={branch.id} className="shadow-card overflow-hidden">
+              {/* Branch Hero Image */}
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src={branch.image} 
+                  alt={`${branch.name} campus`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/30" />
+                <div className="absolute bottom-4 left-4">
+                  <h2 className="text-3xl font-bold text-white mb-2">{branch.name}</h2>
+                  <div className="flex items-center gap-2 text-white/90">
+                    <MapPin className="h-4 w-4" />
+                    <span>{branch.location}</span>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4">
+                  <Badge variant="secondary">Est. {branch.established}</Badge>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
                 {/* Branch Info */}
                 <div className="lg:col-span-2 p-8">
@@ -198,11 +236,15 @@ const Branches = () => {
                         </div>
                         <div className="flex items-center gap-2">
                           <Phone className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-muted-foreground">{branch.phone}</span>
+                          <a href={`tel:${branch.phone}`} className="text-muted-foreground hover:text-primary transition-colors">
+                            {branch.phone}
+                          </a>
                         </div>
                         <div className="flex items-center gap-2">
                           <Mail className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-muted-foreground">{branch.email}</span>
+                          <a href={`mailto:${branch.email}`} className="text-muted-foreground hover:text-primary transition-colors">
+                            {branch.email}
+                          </a>
                         </div>
                         <div className="flex items-center gap-2">
                           <Clock className="h-4 w-4 text-muted-foreground" />
@@ -273,11 +315,40 @@ const Branches = () => {
                       </ul>
                     </div>
 
-                    {/* Action Button */}
-                    <Button className="w-full">
-                      Visit This Branch
-                    </Button>
+                    {/* Action Buttons */}
+                    <div className="space-y-3">
+                      <Button className="w-full" asChild>
+                        <Link to="/contact">Contact This Branch</Link>
+                      </Button>
+                      <Button variant="outline" className="w-full" asChild>
+                        <a 
+                          href={`https://maps.google.com/?q=${encodeURIComponent(branch.address)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                        >
+                          <ExternalLink className="h-4 w-4" />
+                          Get Directions
+                        </a>
+                      </Button>
+                    </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Campus Gallery */}
+              <div className="p-6 bg-accent">
+                <h3 className="font-semibold mb-4">Campus Gallery</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  {branch.galleryImages.map((image, idx) => (
+                    <div key={idx} className="relative aspect-video overflow-hidden rounded-lg">
+                      <img 
+                        src={image} 
+                        alt={`${branch.name} facility ${idx + 1}`}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </Card>
@@ -293,15 +364,24 @@ const Branches = () => {
                 Experience our facilities and meet our faculty members in person
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" variant="secondary">
-                  Schedule a Visit
+                <Button size="lg" variant="secondary" asChild>
+                  <Link to="/contact">Schedule a Visit</Link>
                 </Button>
                 <Button 
                   size="lg" 
                   variant="outline" 
                   className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                  asChild
                 >
-                  Get Directions
+                  <a 
+                    href="https://maps.google.com/?q=Sri+Gayatri+Junior+College+Visakhapatnam"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Get Directions
+                  </a>
                 </Button>
               </div>
             </CardContent>

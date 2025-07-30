@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { GraduationCap, Users, MapPin, BookOpen, Award, Star } from "lucide-react";
 import heroImage from "@/assets/college-hero.jpg";
 import studentsImage from "@/assets/students-study.jpg";
+import libraryImage from "@/assets/library-interior.jpg";
+import classroomImage from "@/assets/classroom-modern.jpg";
+import sportsImage from "@/assets/sports-ground.jpg";
 
 const Home = () => {
   const stats = [
@@ -170,7 +173,40 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+        {/* Facilities Showcase */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-foreground mb-4">Our Facilities</h2>
+              <p className="text-lg text-muted-foreground">
+                Modern infrastructure and state-of-the-art facilities across all branches
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { image: libraryImage, title: "Modern Library", desc: "Extensive collection with digital resources" },
+                { image: classroomImage, title: "Smart Classrooms", desc: "Air-conditioned rooms with latest technology" },
+                { image: sportsImage, title: "Sports Facilities", desc: "Outdoor grounds and indoor sports complex" }
+              ].map((facility, index) => (
+                <Card key={index} className="overflow-hidden shadow-card group">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={facility.image} 
+                      alt={facility.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{facility.title}</h3>
+                    <p className="text-muted-foreground">{facility.desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
       <section className="py-20 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold mb-6">Ready to Start Your Journey?</h2>

@@ -159,6 +159,7 @@ const Contact = () => {
                 </div>
 
                 <Button size="lg" className="w-full">
+                  <Mail className="h-4 w-4 mr-2" />
                   Send Message
                 </Button>
               </CardContent>
